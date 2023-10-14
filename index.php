@@ -9,22 +9,58 @@
     <style>
         table  td, table th{
         vertical-align:middle;
-        /* text-align:right; */
+        text-align:right;
         padding:20px!important;
         }
     </style>
 </head>
 <body>
-
-  <div class="container my-4">
-    <header class="d-flex justify-content-between my-4">
-              <h1>Book List</h1>
-              <div>
-                  <a href="create.php" class="btn btn-primary">Add New Book</a>
-              </div>
-    </header>
-
-  <table class="table table-bordered">
+    <div class="container my-4">
+        <header class="d-flex justify-content-between my-4">
+            <h1>Book List</h1>
+            <div>
+                <a href="create.php" class="btn btn-primary">Add New Book</a>
+            </div>
+        </header>
+        <?php
+        session_start();
+        if (isset($_SESSION["create"])) {
+        ?>
+        <div class="alert alert-success">
+            <?php 
+            echo $_SESSION["create"];
+            ?>
+        </div>
+        <?php
+        unset($_SESSION["create"]);
+        }
+        ?>
+         <?php
+        if (isset($_SESSION["update"])) {
+        ?>
+        <div class="alert alert-success">
+            <?php 
+            echo $_SESSION["update"];
+            ?>
+        </div>
+        <?php
+        unset($_SESSION["update"]);
+        }
+        ?>
+        <?php
+        if (isset($_SESSION["delete"])) {
+        ?>
+        <div class="alert alert-success">
+            <?php 
+            echo $_SESSION["delete"];
+            ?>
+        </div>
+        <?php
+        unset($_SESSION["delete"]);
+        }
+        ?>
+        
+        <table class="table table-bordered">
         <thead>
             <tr>
                 <th>#</th>
@@ -35,13 +71,13 @@
             </tr>
         </thead>
         <tbody>
-      <?php
+        
+        <?php
         include('connect.php');
         $sqlSelect = "SELECT * FROM books";
         $result = mysqli_query($conn,$sqlSelect);
         while($data = mysqli_fetch_array($result)){
-      ?>
-        
+            ?>
             <tr>
                 <td><?php echo $data['id']; ?></td>
                 <td><?php echo $data['title']; ?></td>
@@ -58,7 +94,6 @@
         ?>
         </tbody>
         </table>
-        </div>
-
+    </div>
 </body>
 </html>
